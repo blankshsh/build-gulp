@@ -14,10 +14,10 @@ var rename = require('gulp-rename')
 var del = require('del')
 
 gulp.task('default', function() {
-  gulp.start('lesscss');
-  // gulp.start('lesscss', "minifyjs");
+  gulp.start('less');
+  // gulp.start('less', "js");
 });
-gulp.task("lesscss", function() {
+gulp.task("less", function() {
   var processors = [
     autoprefixer({
       browsers: ['last 4 version']
@@ -31,16 +31,16 @@ gulp.task("lesscss", function() {
     .pipe(gulp.dest('./build/css')) //输出css的路径
     .pipe(livereload())
 });
-gulp.task('minifyjs', function() {
+gulp.task('js', function() {
   return gulp.src('./build/js/*.js')
-    //.pipe(concat('./js/main.js')) //合并所有js到main.js
-    //.pipe(gulp.dest('./js/min/js')) //输出main.js的路径
+    // .pipe(concat('main.js')) // 合并所有js到main.js
+    // .pipe(gulp.dest('./build/js/main')) // 输出main.js的路径
     .pipe(rename({
-      suffix: '.min'
-    })) //rename压缩后的文件名
-    .pipe(uglify()) //压缩
-    .pipe(gulp.dest('./build/js/min')) //输出
-    .pipe(livereload())
+      suffix: '.min' // 为JS加上min
+    })) 
+    .pipe(uglify()) // 压缩JS
+    .pipe(gulp.dest('./build/js/min')) // 输出压缩后的JS
+    .pipe(livereload()) // 刷新网页
 });
 
 gulp.task('watch', function() {
