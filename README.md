@@ -16,15 +16,12 @@ npm install
 - [gulp-postcss]
 - [gulp-less]
 - [gulp-watch]
-- [gulp-minify-css]
 - [gulp-concat]
 - [gulp-uglify]
 - [gulp-rename]
 - [autoprefixer]
 - [css-mqpacker]
 - [csswring]
-- [del]
-- [path]
 
 
 Usage
