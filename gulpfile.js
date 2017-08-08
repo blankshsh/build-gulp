@@ -3,18 +3,15 @@
 //引用依赖
 var gulp = require('gulp');
 var livereload = require('gulp-livereload');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var mqpacker = require('css-mqpacker');
-var csswring = require('csswring');
+var postcss = require('gulp-postcss'); //css后处理器
+var autoprefixer = require('autoprefixer'); // css浏览器兼容
+var mqpacker = require('css-mqpacker'); // 合并css
+var csswring = require('csswring'); // 去空格
 var less = require('gulp-less');
-var path = require('path');
 var watch = require('gulp-watch');
-var minifycss = require('gulp-minify-css');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var del = require('del');
+var concat = require('gulp-concat'); // js合并
+var uglify = require('gulp-uglify'); // js压缩
+var rename = require('gulp-rename'); // 重命名
 
 //文件路径
 var lessSrc = './build/less/*.less';
@@ -24,8 +21,8 @@ var jsMain = './build/js/main';
 var jsMin = './build/js/min';
 
 gulp.task('default', function() {
-  gulp.start('less');
-  // gulp.start('less', "js");
+  // gulp.start('less');
+  gulp.start('less', "js");
 });
 
 gulp.task("less", function() {
@@ -39,27 +36,27 @@ gulp.task("less", function() {
   return gulp.src(lessSrc) //less路径
     .pipe(less())
     .pipe(postcss(processors))
-    .pipe(gulp.dest(cssSrc)) //输出css路径
+    .pipe(gulp.dest(cssSrc)) //输出css
     .pipe(livereload())
 });
 
 gulp.task('js', function() {
-  return gulp.src(jsSrc)
-    // .pipe(concat('main.js')) // 合并js至main
-    // .pipe(gulp.dest(jsMain)) // 输出main路径
+  return gulp.src(jsSrc) // js路径
+    // .pipe(concat('main.js')) // 合并js
+    // .pipe(gulp.dest(jsMain)) // 输出main
     .pipe(rename({
-      suffix: '.min' // 压缩名称min
+      suffix: '.min'
     })) 
-    .pipe(uglify()) // 压缩JS
-    .pipe(gulp.dest(jsMin)) // 输出压缩后的JS
+    .pipe(uglify())
+    .pipe(gulp.dest(jsMin)) // 输出JS
     .pipe(livereload()) // 刷新网页
 });
 
 gulp.task('watch', function() {
   livereload.listen();
-  // watch(jsSrc, function() {
-  //   gulp.start('js');
-  // })
+  watch(jsSrc, function() {
+    gulp.start('js');
+  })
   watch(lessSrc, function() {
     gulp.start('less');
   })
